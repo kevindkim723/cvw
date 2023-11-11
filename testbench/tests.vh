@@ -1971,6 +1971,7 @@ string arch64zbs[] = '{
  string wally64priv[] = '{
     `WALLYTEST,
     "rv64i_m/privilege/src/WALLY-minfo-01.S",
+    "rv64i_m/privilege/src/WALLY-misaligned-access-01.S",
     "rv64i_m/privilege/src/WALLY-csr-permission-s-01.S",
     "rv64i_m/privilege/src/WALLY-cboz-01.S",
     "rv64i_m/privilege/src/WALLY-cbom-01.S",
@@ -2009,7 +2010,8 @@ string arch64zbs[] = '{
     "rv64i_m/privilege/src/WALLY-gpio-01.S",
     "rv64i_m/privilege/src/WALLY-plic-01.S",
     "rv64i_m/privilege/src/WALLY-plic-s-01.S",
-    "rv64i_m/privilege/src/WALLY-uart-01.S"
+    "rv64i_m/privilege/src/WALLY-uart-01.S",
+    "rv64i_m/privilege/src/WALLY-spi-01.S"
  };
 
  string wally32e[] = '{
@@ -2095,7 +2097,8 @@ string arch64zbs[] = '{
     "rv32i_m/privilege/src/WALLY-clint-01.S",
     "rv32i_m/privilege/src/WALLY-uart-01.S",
     "rv32i_m/privilege/src/WALLY-plic-01.S",
-    "rv32i_m/privilege/src/WALLY-plic-s-01.S"
+    "rv32i_m/privilege/src/WALLY-plic-s-01.S",
+    "rv32i_m/privilege/src/WALLY-spi-01.S"
 
  };
 
