@@ -3,7 +3,6 @@
 localparam M_MODE  = (2'b11);
 localparam S_MODE  = (2'b01);
 localparam U_MODE  = (2'b00);
-
 // Virtual Memory Constants
 localparam VPN_SEGMENT_BITS = (XLEN == 32 ? 32'd10 : 32'd9);
 localparam VPN_BITS = (XLEN==32 ? (2*VPN_SEGMENT_BITS) : (4*VPN_SEGMENT_BITS));
@@ -20,19 +19,18 @@ localparam SV32 = 4'd1;
 localparam SV39 = 4'd8;
 localparam SV48 = 4'd9;
 
+
 // macros to define supported modes
 localparam A_SUPPORTED = ((MISA >> 0) % 2 == 1);
 localparam B_SUPPORTED = ((ZBA_SUPPORTED | ZBB_SUPPORTED | ZBC_SUPPORTED | ZBS_SUPPORTED));// not based on MISA
 localparam C_SUPPORTED = ((MISA >> 2) % 2 == 1);
 localparam COMPRESSED_SUPPORTED = C_SUPPORTED | ZCA_SUPPORTED;
-//localparam D_SUPPORTED = ((MISA >> 3) % 2 == 1);
-localparam D_SUPPORTED = 0;
+localparam D_SUPPORTED = 1;
 localparam E_SUPPORTED = ((MISA >> 4) % 2 == 1);
 localparam F_SUPPORTED = ((MISA >> 5) % 2 == 1);
 localparam I_SUPPORTED = ((MISA >> 8) % 2 == 1);
 localparam M_SUPPORTED = ((MISA >> 12) % 2 == 1);
-//localparam Q_SUPPORTED = ((MISA >> 16) % 2 == 1);
-localparam Q_SUPPORTED = 0;
+localparam Q_SUPPORTED = 1;
 localparam S_SUPPORTED = ((MISA >> 18) % 2 == 1);
 localparam U_SUPPORTED = ((MISA >> 20) % 2 == 1);
 // N-mode user-level interrupts are depricated per Andrew Waterman 1/13/21
