@@ -274,9 +274,26 @@ module fpu import cvw::*;  #(parameter cvw_t P) (
   end else assign FliResE = '0;
 
   // fmv.*.x: NaN Box SrcA to extend integer to requested FP size 
-  if(P.FPSIZES == 1) assign PreIntSrcE = {{P.FLEN-P.XLEN{1'b1}}, ForwardedSrcAE};
-  else if(P.FPSIZES == 2) 
-    mux2 #(P.FLEN) SrcAMux ({{P.FLEN-P.LEN1{1'b1}}, ForwardedSrcAE[P.LEN1-1:0]}, {{P.FLEN-P.XLEN{1'b1}}, ForwardedSrcAE}, FmtE, PreIntSrcE);
+  // move integer to fp register
+  // RV64 ONLY has fmv.D.x
+  //if(P.FPSIZES == 1) assign PreIntSrcE = {{P.FLEN-P.XLEN{1'b1}}, ForwardedSrcAE};
+  // F only 
+  if(P.FPSIZES == 1) assign PreIntSrcE = {ForwardedSrcAE[P.FLEN-1:0]};
+  // F,D supported: FLEN = 64, LEN1 = 32
+  else if(P.FPSIZES == 2) begin
+    // two cases : F,D (fmv.D.x supported on rv64 only) or F, H
+    if (P.D_SUPPORTED) //F,D: FLEN=64, LEN1=32
+      //***NOTE: 32 MSBS on the LHS of the mux implies that the 32 msbs of fp register are filled with 1's. I don't think this is specified in the spec, so check on this later - KK
+      if (P.XLEN == 64) 
+        //rv64
+        mux2 #(P.FLEN) SrcAMux ({{P.FLEN-P.LEN1{1'b1}}, ForwardedSrcAE[P.LEN1-1:0]}, {ForwardedSrcAE}, FmtE, PreIntSrcE);
+      else
+        //rv32
+        assign PreIntSrcE = {{32{1'b1}},ForwardedSrcAE};
+    else //F, H : FLEN = 32, LEN1 = 16
+      //***NOTE: 32 MSBS on the LHS of the mux implies that the 32 msbs of fp register are filled with 1's. I don't think this is specified in the spec, so check on this later - KK
+      mux2 #(P.FLEN) SrcAMux ({{P.FLEN-P.LEN1{1'b1}}, ForwardedSrcAE[P.LEN1-1:0]}, {ForwardedSrcAE}, FmtE, PreIntSrcE);
+  end
   else if(P.FPSIZES == 3 | P.FPSIZES == 4) begin
     localparam XD_LEN = P.D_LEN < P.XLEN ? P.D_LEN : P.XLEN; // shorter of D_LEN and XLEN
     mux3 #(P.FLEN) SrcAMux ({{P.FLEN-P.S_LEN{1'b1}}, ForwardedSrcAE[P.S_LEN-1:0]}, 
