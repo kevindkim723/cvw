@@ -44,9 +44,9 @@ module shiftcorrection import cvw::*;  #(parameter cvw_t P) (
   output logic [P.NE+1:0]          Ue                      // corrected exponent for divider
 );
 
-  logic [P.NORMSHIFTSZ-2:0]        CorrSumShifted;         // the shifted sum after LZA correction
-  logic [P.NORMSHIFTSZ-2:0]        CorrQm0, CorrQm1;       // portions of Shifted to select for CorrQmShifted
-  logic [P.NORMSHIFTSZ-2:0]        CorrQmShifted;          // the shifted divsqrt result after one bit shift
+  logic [P.NORMSHIFTSZ-3:0]        CorrSumShifted;         // the shifted sum after LZA correction
+  logic [P.NORMSHIFTSZ-3:0]        CorrQm0, CorrQm1;       // portions of Shifted to select for CorrQmShifted
+  logic [P.NORMSHIFTSZ-3:0]        CorrQmShifted;          // the shifted divsqrt result after one bit shift
   logic                            ResSubnorm;             // is the result Subnormal
   logic                            LZAPlus1;               // add one or two to the sum's exponent due to LZA correction
   logic                            LeftShiftQm;            // should the divsqrt result be shifted one to the left
@@ -66,12 +66,12 @@ module shiftcorrection import cvw::*;  #(parameter cvw_t P) (
   assign CorrQm0     = Shifted[P.NORMSHIFTSZ-3:0];
   //assign CorrQm1     = Shifted[P.NORMSHIFTSZ-2:P.NORMSHIFTSZ-P.CORRSHIFTSZ-1];
   assign CorrQm1     = Shifted[P.NORMSHIFTSZ-2:1];
-  mux2 #(P.CORRSHIFTSZ) divcorrmux(CorrQm0, CorrQm1, LeftShiftQm, CorrQmShifted);
+  mux2 #(P.NORMSHIFTSZ-2) divcorrmux(CorrQm0, CorrQm1, LeftShiftQm, CorrQmShifted);
   
   // if the result of the divider was calculated to be subnormal, then the result was correctly normalized, so select the top shifted bits
   always_comb
-    if(FmaOp)                       Mf = {CorrSumShifted};
-    else if (DivOp&~DivResSubnorm)  Mf = CorrQmShifted;
+    if(FmaOp)                       Mf = {CorrSumShifted,  {(P.NORMSHIFTSZ-P.CORRSHIFTSZ){1'b0}}};
+    else if (DivOp&~DivResSubnorm)  Mf = {CorrQmShifted, {(P.NORMSHIFTSZ-P.CORRSHIFTSZ){1'b0}}};
     //else                            Mf = Shifted[P.NORMSHIFTSZ-1:P.NORMSHIFTSZ-P.CORRSHIFTSZ];
     else                            Mf = Shifted[P.NORMSHIFTSZ-1:P.NORMSHIFTSZ-P.CORRSHIFTSZ];
     
