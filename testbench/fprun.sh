@@ -44,112 +44,6 @@ sed -i "80s/localparam.*/localparam IDIV_ON_FPU = 32\'d0;/" $WALLY/config/rv64gc
 }
 
 
-gen(){
-    mkdir $WALLY/testbench/runs
-    cd ../sim
-    setQ_ON
-    setD_ON
-    setK1
-
-    #k=1,r=1
-    setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_1Q.out
-
-    #k=1,r=2
-    setR2
-
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_2Q.out
-    setK2
-
-    #k=2, r=1
-    setR1
-
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_1Q.out
-
-    #k=2,r=2
-    setR2
-
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2Q.out
-    setK4
-
-    #k=4,r=1
-    setR1
-    
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_1Q.out
-    #k=4,r=2
-    setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_2Q.out
-
-
-    setQ_OFF
-    setD_ON
-    setK1
-
-    #k=1,r=1
-    setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_1D.out
-
-    #k=1,r=2
-    setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_2D.out
-
-    setK2
-
-    #k=2, r=1
-    setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_1D.out
-
-    #k=2,r=2
-    setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2D.out
-
-    setK4
-
-    #k=4,r=1
-    setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_1D.out
-    
-    #k=4,r=2
-    setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_2D.out
-
-
-    setQ_OFF
-    setD_OFF
-    setK1
-
-    #k=1,r=1
-    setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_1F.out
-
-    #k=1,r=2
-    setR2
-
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_2F.out
-    setK2
-
-    #k=2, r=1
-    setR1
-
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_1F.out
-
-    #k=2,r=2
-    setR2
-
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2F.out
-    setK4
-
-    #k=4,r=1
-    setR1
-    
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_1F.out
-    #k=4,r=2
-    setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_2F.out
-
-}
-
-
 
 
 gen(){
@@ -161,32 +55,32 @@ gen(){
 
     #k=1,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_1Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_1_r_1Q.out
 
     #k=1,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_2Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_1_r_2Q.out
     setK2
 
     #k=2, r=1
     setR1
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_1Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_1Q.out
 
     #k=2,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_2Q.out
     setK4
 
     #k=4,r=1
     setR1
     
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_1Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_4_r_1Q.out
     #k=4,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_2Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_4_r_2Q.out
 
 
     setQ_OFF
@@ -195,31 +89,31 @@ gen(){
 
     #k=1,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_1D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_1_r_1D.out
 
     #k=1,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_1_r_2D.out
 
     setK2
 
     #k=2, r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_1D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_1D.out
 
     #k=2,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_2D.out
 
     setK4
 
     #k=4,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_1D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_4_r_1D.out
     
     #k=4,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_4_r_2D.out
 
 
     setQ_OFF
@@ -228,32 +122,32 @@ gen(){
 
     #k=1,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_1F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_1_r_1F.out
 
     #k=1,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_1_r_2F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_1_r_2F.out
     setK2
 
     #k=2, r=1
     setR1
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_1F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_1F.out
 
     #k=2,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_2F.out
     setK4
 
     #k=4,r=1
     setR1
     
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_1F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_4_r_1F.out
     #k=4,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_4_r_2F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_4_r_2F.out
 
 }
 
@@ -268,32 +162,32 @@ gen2(){
 
     #k=1,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_1_r_1Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_1_r_1Q.out
 
     #k=1,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_1_r_2Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_1_r_2Q.out
     setK2
 
     #k=2, r=1
     setR1
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_2_r_1Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_2_r_1Q.out
 
     #k=2,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_2_r_2Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_2_r_2Q.out
     setK4
 
     #k=4,r=1
     setR1
     
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_4_r_1Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_4_r_1Q.out
     #k=4,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_4_r_2Q.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_4_r_2Q.out
 
     setQ_OFF
     setD_ON
@@ -301,31 +195,31 @@ gen2(){
 
     #k=1,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_1_r_1D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_1_r_1D.out
 
     #k=1,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_1_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_1_r_2D.out
 
     setK2
 
     #k=2, r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_2_r_1D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_2_r_1D.out
 
     #k=2,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_2_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_2_r_2D.out
 
     setK4
 
     #k=4,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_4_r_1D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_4_r_1D.out
     
     #k=4,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_4_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_4_r_2D.out
 
 
     setQ_OFF
@@ -334,32 +228,32 @@ gen2(){
 
     #k=1,r=1
     setR1
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_1_r_1F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_1_r_1F.out
 
     #k=1,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_1_r_2F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_1_r_2F.out
     setK2
 
     #k=2, r=1
     setR1
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_2_r_1F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_2_r_1F.out
 
     #k=2,r=2
     setR2
 
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_2_r_2F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_2_r_2F.out
     setK4
 
     #k=4,r=1
     setR1
     
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_4_r_1F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_4_r_1F.out
     #k=4,r=2
     setR2
-    ./sim-testfloat-batch all > $WALLY/testbench/runs_noidiv/k_4_r_2F.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs_noidiv/k_4_r_2F.out
 
 }
 
@@ -371,6 +265,6 @@ edge(){
     setK2
     setR2
     cd ../sim
-    ./sim-testfloat-batch all > $WALLY/testbench/runs/k_2_r_2D.out
+    ./sim-testfloat-batch $1 > $WALLY/testbench/runs/k_2_r_2D.out
 }
 
