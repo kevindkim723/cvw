@@ -35,6 +35,7 @@ module fmaadd import cvw::*;  #(parameter cvw_t P) (
   input  logic                 InvA,       // invert the aligned addend
   input  logic                 KillProd,   // should the product be set to 0
   input  logic                 ASticky,    // Alighed addend's sticky bit
+  input  logic                 NFPlusThree,
   output logic [3*P.NF+3:0]    AmInv,      // aligned addend possibly inverted
   output logic [2*P.NF+1:0]    PmKilled,   // the product's mantissa possibly killed
   output logic                 Ss,         // sum's sign    
@@ -44,15 +45,19 @@ module fmaadd import cvw::*;  #(parameter cvw_t P) (
 
   logic [3*P.NF+3:0]    PreSum, NegPreSum; // possibly negative sum
   logic                 NegSum;            // was the sum negative
+  logic                 KillProdNFPlusThree;
+  logic                 ShiftProd;
 
   ///////////////////////////////////////////////////////////////////////////////
   // Addition
   ///////////////////////////////////////////////////////////////////////////////
   
+  assign ShiftProd = NFPlusThree & InvA;
+
   // Choose an inverted or non-inverted addend.  Put carry into adder/LZA for addition
   assign AmInv = {3*P.NF+4{InvA}}^Am;
   // Kill the product if the product is too small to effect the addition (determined in fma1.sv)
-  assign PmKilled = {2*P.NF+2{~KillProd}}&Pm;
+  assign PmKilled = ShiftProd ? {1'b0,Pm[2*P.NF+1:1]}: {2*P.NF+2{~KillProd}}&Pm;
   // Do the addition
   //      - calculate a positive and negative sum in parallel
   // if there was a small negative number killed in the alignment stage one needs to be subtracted from the sum

@@ -32,7 +32,8 @@ module fmaalign import cvw::*;  #(parameter cvw_t P) (
   input  logic                 XZero, YZero, ZZero, // is the input zero
   output logic [3*P.NF+3:0]    Am,                  // addend aligned for addition in U(NF+5.2NF+1)
   output logic                 ASticky,             // Sticky bit calculated from the aliged addend
-  output logic                 KillProd             // should the product be set to zero
+  output logic                 KillProd,            // should the product be set to zero
+  output logic                 NFPlusThree          // Is Pe-Ze NF+3
 );
 
   logic [P.NE+1:0]             ACnt;                // how far to shift the addend to align with the product in Q(NE+2.0) format
@@ -83,6 +84,7 @@ module fmaalign import cvw::*;  #(parameter cvw_t P) (
         ZmShifted = ZmPreshifted >> ACnt;
         ASticky   = |(ZmShifted[P.NF-1:0]); 
     end
+    NFPlusThree = &ACnt;
   end
 
   assign Am = ZmShifted[4*P.NF+3:P.NF];
