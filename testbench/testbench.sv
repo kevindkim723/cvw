@@ -104,6 +104,8 @@ module testbench;
         "arch64d":      if (P.D_SUPPORTED)        tests = arch64d;  
         "arch64f_fma":  if (P.F_SUPPORTED)        tests = arch64f_fma;
         "arch64d_fma":  if (P.D_SUPPORTED)        tests = arch64d_fma;  
+        "arch64f_divsqrt":  if (P.F_SUPPORTED)        tests = arch64f_divsqrt;
+        "arch64d_divsqrt":  if (P.D_SUPPORTED)        tests = arch64d_divsqrt;  
         "arch64zifencei":  if (P.ZIFENCEI_SUPPORTED) tests = arch64zifencei;
         "arch64zicond":  if (P.ZICOND_SUPPORTED)  tests = arch64zicond;
         "imperas64i":                             tests = imperas64i;
@@ -119,7 +121,7 @@ module testbench;
         "wally64periph":                          tests = wally64periph;
         "coremark":                               tests = coremark;
         "fpga":                                   tests = fpga;
-        "ahb" :                                   tests = ahb;
+        "ahb64" :                                 tests = ahb64;
         "coverage64gc" :                          tests = coverage64gc;
         "arch64zba":     if (P.ZBA_SUPPORTED)     tests = arch64zba;
         "arch64zbb":     if (P.ZBB_SUPPORTED)     tests = arch64zbb;
@@ -128,6 +130,8 @@ module testbench;
         "arch64zicboz":  if (P.ZICBOZ_SUPPORTED)  tests = arch64zicboz;
         "arch64zcb":     if (P.ZCB_SUPPORTED)     tests = arch64zcb;
         "arch64zfh":     if (P.ZFH_SUPPORTED)     tests = arch64zfh;
+//        "arch64zfh_fma": if (P.ZFH_SUPPORTED)     tests = arch64zfh_fma; *** not yet in riscv-arch-tst PR367
+        "arch64zfh_divsqrt":     if (P.ZFH_SUPPORTED)     tests = arch64zfh_divsqrt;
         "arch64zfaf":    if (P.ZFA_SUPPORTED)     tests = arch64zfaf;
         "arch64zfad":    if (P.ZFA_SUPPORTED & P.D_SUPPORTED)  tests = arch64zfad;
       endcase 
@@ -145,6 +149,8 @@ module testbench;
         "arch32d":      if (P.D_SUPPORTED)        tests = arch32d;
         "arch32f_fma":  if (P.F_SUPPORTED)        tests = arch32f_fma;
         "arch32d_fma":  if (P.D_SUPPORTED)        tests = arch32d_fma;
+        "arch32f_divsqrt":  if (P.F_SUPPORTED)        tests = arch32f_divsqrt;
+        "arch32d_divsqrt":  if (P.D_SUPPORTED)        tests = arch32d_divsqrt;  
         "arch32zifencei":     if (P.ZIFENCEI_SUPPORTED) tests = arch32zifencei;
         "arch32zicond":  if (P.ZICOND_SUPPORTED)  tests = arch32zicond;
         "imperas32i":                             tests = imperas32i;
@@ -156,6 +162,7 @@ module testbench;
         "wally32i":                               tests = wally32i; 
         "wally32priv":                            tests = wally32priv;
         "wally32periph":                          tests = wally32periph;
+        "ahb32" :                                 tests = ahb32;
         "embench":                                tests = embench;
         "coremark":                               tests = coremark;
         "arch32zba":     if (P.ZBA_SUPPORTED)     tests = arch32zba;
@@ -165,13 +172,15 @@ module testbench;
         "arch32zicboz":  if (P.ZICBOZ_SUPPORTED)  tests = arch32zicboz;
         "arch32zcb":     if (P.ZCB_SUPPORTED)     tests = arch32zcb;
         "arch32zfh":     if (P.ZFH_SUPPORTED)     tests = arch32zfh;
+ //       "arch32zfh_fma": if (P.ZFH_SUPPORTED)     tests = arch32zfh_fma; *** not yet in riscv-arch-tst PR367
+        "arch32zfh_divsqrt":     if (P.ZFH_SUPPORTED)     tests = arch32zfh_divsqrt;
         "arch32zfaf":    if (P.ZFA_SUPPORTED)     tests = arch32zfaf;
         "arch32zfad":    if (P.ZFA_SUPPORTED & P.D_SUPPORTED)  tests = arch32zfad;
       endcase
     end
     if (tests.size() == 0) begin
       $display("TEST %s not supported in this configuration", TEST);
-      $stop;
+      $finish;
     end
   end // initial begin
 
@@ -291,7 +300,7 @@ module testbench;
     if (TEST == "coremark")
       if (dut.core.priv.priv.EcallFaultM) begin
         $display("Benchmark: coremark is done.");
-        $stop;
+        $finish;
       end
     if(Validate) begin
       if (TEST == "embench") begin
@@ -317,19 +326,18 @@ module testbench;
       end else begin 
         // for tests with no self checking mechanism, read .signature.output file and compare to check for errors
         // clear signature to prevent contamination from previous tests
+        if (!begin_signature_addr)
+          $display("begin_signature addr not found in %s", ProgramLabelMapFile);
+        else if (TEST != "embench") begin   // *** quick hack for embench.  need a better long term solution
+          CheckSignature(pathname, tests[test], riscofTest, begin_signature_addr, errors);
+          if(errors > 0) totalerrors = totalerrors + 1;
+        end
       end
-
-      if (!begin_signature_addr)
-        $display("begin_signature addr not found in %s", ProgramLabelMapFile);
-      else if (TEST != "embench") begin   // *** quick hack for embench.  need a better long term solution
-        CheckSignature(pathname, tests[test], riscofTest, begin_signature_addr, errors);
-      end
-      if(errors > 0) totalerrors = totalerrors + 1;
       test = test + 1; // *** this probably needs to be moved.
       if (test == tests.size()) begin
         if (totalerrors == 0) $display("SUCCESS! All tests ran without failures.");
         else $display("FAIL: %d test programs had errors", totalerrors);
-        $stop;
+        $finish;
       end
     end
   end
@@ -593,7 +601,7 @@ module testbench;
         errors = errors+1;
         $display("  Error on test %s result %d: adr = %h sim (D$) %h sim (DTIM_SUPPORTED) = %h, signature = %h", 
 			     TestName, i, (testadr+i)*(P.XLEN/8), testbench.DCacheFlushFSM.ShadowRAM[testadr+i], sig, signature[i]);
-        $stop;
+        $finish;
       end
     end
     if (errors) $display("%s failed with %d errors. :(", TestName, errors);

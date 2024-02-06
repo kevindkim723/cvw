@@ -9,6 +9,7 @@
 // Documentation: RISC-V System on Chip Design Chapter 13
 //
 // A component of the CORE-V-WALLY configurable RISC-V project.
+// https://github.com/openhwgroup/cvw
 // 
 // Copyright (C) 2021-23 Harvey Mudd College & Oklahoma State University
 //
@@ -342,7 +343,7 @@ module specialcase import cvw::*;  #(parameter cvw_t P) (
         else     OfIntRes2 = OfIntRes;
         if (Zfa) Int64Res = {{(P.XLEN-32){CvtNegRes[P.XLEN-1]}}, CvtNegRes[31:0]};
         else     Int64Res = CvtNegRes[P.XLEN-1:0];
-        if (Zfa) SelCvtOfRes = InfIn | NaNIn; // fcvtmod.w.d only overflows to 0 on NaN or Infinity
+        if (Zfa) SelCvtOfRes = InfIn | NaNIn  | (CvtCe > 32 + 52); // fcvtmod.w.d only overflows to 0 on NaN or Infinity, or if the shift is so large that only zeros are left
         else     SelCvtOfRes = IntInvalid;    // regular fcvt gives an overflow if out of range
     end
   else 

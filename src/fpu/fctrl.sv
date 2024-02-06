@@ -9,6 +9,7 @@
 // Documentation: RISC-V System on Chip Design Chapter 13
 //
 // A component of the CORE-V-WALLY configurable RISC-V project.
+// https://github.com/openhwgroup/cvw
 // 
 // Copyright (C) 2021-23 Harvey Mudd College & Oklahoma State University
 //
@@ -86,9 +87,8 @@ module fctrl import cvw::*;  #(parameter cvw_t P) (
   assign Fmt = Funct7D[1:0];
   assign Fmt2 = Rs2D[1:0]; // source format for fcvt fp->fp
 
-  assign SupportedFmt =  (Fmt == 2'b00 | (Fmt == 2'b01 & P.D_SUPPORTED) |
-                         (Fmt == 2'b10 & P.ZFH_SUPPORTED & {OpD[6:4], OpD[1:0]} != 5'b10011) | // fma not supported for Zfh
-                         (Fmt == 2'b11 & P.Q_SUPPORTED));
+  assign SupportedFmt =  (Fmt == 2'b00  | (Fmt == 2'b01 & P.D_SUPPORTED) |
+                         (Fmt == 2'b10 & P.ZFH_SUPPORTED)  | (Fmt == 2'b11 & P.Q_SUPPORTED));
   assign SupportedFmt2 = (Fmt2 == 2'b00 | (Fmt2 == 2'b01 & P.D_SUPPORTED) |
                          (Fmt2 == 2'b10 & P.ZFH_SUPPORTED) | (Fmt2 == 2'b11 & P.Q_SUPPORTED));
 
