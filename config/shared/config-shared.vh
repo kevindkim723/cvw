@@ -27,7 +27,7 @@ localparam C_SUPPORTED = ((MISA >> 2) % 2 == 1);
 localparam COMPRESSED_SUPPORTED = C_SUPPORTED | ZCA_SUPPORTED;
 localparam D_SUPPORTED = 0;
 localparam E_SUPPORTED = ((MISA >> 4) % 2 == 1);
-localparam F_SUPPORTED = 0;
+localparam F_SUPPORTED = 1;
 localparam I_SUPPORTED = ((MISA >> 8) % 2 == 1);
 localparam M_SUPPORTED = ((MISA >> 12) % 2 == 1);
 localparam Q_SUPPORTED = 0;

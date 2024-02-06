@@ -84,7 +84,7 @@ module fmaalign import cvw::*;  #(parameter cvw_t P) (
         ZmShifted = ZmPreshifted >> ACnt;
         ASticky   = |(ZmShifted[P.NF-1:0]); 
     end
-    NFPlusThree = &ACnt;
+    NFPlusThree = &ACnt &~XZero & ~YZero;
   end
 
   assign Am = ZmShifted[4*P.NF+3:P.NF];

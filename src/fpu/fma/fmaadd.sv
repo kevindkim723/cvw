@@ -66,8 +66,8 @@ module fmaadd import cvw::*;  #(parameter cvw_t P) (
   //      addend - prod where product is killed (and not exactly zero) then don't add +1 from negation 
   //          ie ~(InvA&ASticky&KillProd)&InvA = (~ASticky|~KillProd)&InvA
   //          in this case this result is only ever selected when InvA=1 so we can remove &InvA
-  assign {NegSum, PreSum} = {{P.NF+2{1'b0}}, PmKilled, 1'b0} + {InvA, AmInv} + {{3*P.NF+4{1'b0}}, (~ASticky|KillProd)&InvA};
-  assign NegPreSum = Am + {{P.NF+1{1'b1}}, ~PmKilled, 1'b0} + {(3*P.NF+2)'(0), ~ASticky|~KillProd, 1'b0};
+  assign {NegSum, PreSum} = {{P.NF+2{1'b0}}, PmKilled, 1'b0} + {InvA, AmInv} + {{3*P.NF+4{1'b0}}, (~ASticky|(KillProd &~ShiftProd))&InvA};
+  assign NegPreSum = Am + {{P.NF+1{1'b1}}, ~PmKilled, 1'b0} + {(3*P.NF+2)'(0), ~ASticky|~(KillProd&~ShiftProd), 1'b0};
     
   // Choose the positive sum and accompanying LZA result.
   assign Sm = NegSum ? NegPreSum : PreSum;
@@ -76,5 +76,5 @@ module fmaadd import cvw::*;  #(parameter cvw_t P) (
   //  if -p + z is the Sum positive
   //  if -p - z then the Sum is negative
   assign Ss = NegSum^Ps; 
-  assign Se = KillProd ? {2'b0, Ze} : Pe;
+  assign Se = (KillProd & ~ShiftProd) ? {2'b0, Ze} : (ShiftProd ? Pe+1 : Pe);
 endmodule
