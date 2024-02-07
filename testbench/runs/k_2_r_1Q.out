@@ -1,0 +1,28 @@
+Reading pref.tcl
+
+# 2023.4
+
+# do testfloat.do rv64gc div
+# ** Warning: (vdel-134) Unable to remove locked optimized design "_opt".  Locker is kkim@chips.
+# ** Warning: (vdel-134) Unable to remove locked optimized design "_opt2".  Locker is kkim@chips.
+# ** Warning: (vdel-134) Unable to remove locked optimized design "_opt6".  Locker is kkim@chips.
+# ** Warning: (vdel-134) Unable to remove locked optimized design "_opt7".  Locker is kkim@chips.
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2023.4 Compiler 2023.10 Oct  9 2023
+# Start time: 19:31:16 on Feb 06,2024
+# vlog "+incdir+../config/deriv/rv64gc" "+incdir+../config/rv64gc" "+incdir+../config/shared" ../src/cvw.sv ../testbench/testbench-fp.sv ../src/fpu/fclassify.sv ../src/fpu/fcmp.sv ../src/fpu/fctrl.sv ../src/fpu/fcvt.sv ../src/fpu/fhazard.sv ../src/fpu/fli.sv ../src/fpu/fpu.sv ../src/fpu/fregfile.sv ../src/fpu/fsgninj.sv ../src/fpu/unpack.sv ../src/fpu/unpackinput.sv ../src/fpu/fdivsqrt/fdivsqrt.sv ../src/fpu/fdivsqrt/fdivsqrtcycles.sv ../src/fpu/fdivsqrt/fdivsqrtexpcalc.sv ../src/fpu/fdivsqrt/fdivsqrtfgen2.sv ../src/fpu/fdivsqrt/fdivsqrtfgen4.sv ../src/fpu/fdivsqrt/fdivsqrtfsm.sv ../src/fpu/fdivsqrt/fdivsqrtiter.sv ../src/fpu/fdivsqrt/fdivsqrtpostproc.sv ../src/fpu/fdivsqrt/fdivsqrtpreproc.sv ../src/fpu/fdivsqrt/fdivsqrtstage2.sv ../src/fpu/fdivsqrt/fdivsqrtstage4.sv ../src/fpu/fdivsqrt/fdivsqrtuotfc2.sv ../src/fpu/fdivsqrt/fdivsqrtuotfc4.sv ../src/fpu/fdivsqrt/fdivsqrtuslc2.sv ../src/fpu/fdivsqrt/fdivsqrtuslc4.sv ../src/fpu/fdivsqrt/fdivsqrtuslc4cmp.sv ../src/fpu/fma/fma.sv ../src/fpu/fma/fmaadd.sv ../src/fpu/fma/fmaalign.sv ../src/fpu/fma/fmaexpadd.sv ../src/fpu/fma/fmalza.sv ../src/fpu/fma/fmamult.sv ../src/fpu/fma/fmasign.sv ../src/fpu/postproc/cvtshiftcalc.sv ../src/fpu/postproc/divshiftcalc.sv ../src/fpu/postproc/flags.sv ../src/fpu/postproc/fmashiftcalc.sv ../src/fpu/postproc/negateintres.sv ../src/fpu/postproc/normshift.sv ../src/fpu/postproc/postprocess.sv ../src/fpu/postproc/resultsign.sv ../src/fpu/postproc/round.sv ../src/fpu/postproc/roundsign.sv ../src/fpu/postproc/shiftcorrection.sv ../src/fpu/postproc/specialcase.sv ../src/generic/adder.sv ../src/generic/aplusbeq0.sv ../src/generic/arrs.sv ../src/generic/binencoder.sv ../src/generic/clockgater.sv ../src/generic/counter.sv ../src/generic/csa.sv ../src/generic/decoder.sv ../src/generic/lzc.sv ../src/generic/mux.sv ../src/generic/neg.sv ../src/generic/onehotdecoder.sv ../src/generic/or_rows.sv ../src/generic/priorityonehot.sv ../src/generic/prioritythermometer.sv ../src/generic/flop/flop.sv ../src/generic/flop/flopen.sv ../src/generic/flop/flopenl.sv ../src/generic/flop/flopenr.sv ../src/generic/flop/flopenrc.sv ../src/generic/flop/flopens.sv ../src/generic/flop/flopr.sv ../src/generic/flop/floprc.sv ../src/generic/flop/synchronizer.sv -suppress 2583,7063,8607,2697 
+# -- Compiling package cvw
+# ** Error: ** while parsing file included at ../testbench/testbench-fp.sv(25)
+# ** at ../config/rv64gc/config.vh(170): (vlog-13282) 'DIVCOPIES' already declared in this scope.
+# ** Error: ** while parsing file included at ../testbench/testbench-fp.sv(36)
+# ** at ../config/shared/parameter-defs.vh(24): (vlog-2730) Undefined variable: 'SVADU_SUPPORTED'.
+# End time: 19:31:16 on Feb 06,2024, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
+# ** Error: /cad/mentor/questa_sim-2023.4/questasim/linux_x86_64/vlog failed.
+# Error in macro ./testfloat.do line 28
+# /cad/mentor/questa_sim-2023.4/questasim/linux_x86_64/vlog failed.
+#     while executing
+# "vlog +incdir+../config/deriv/$1 +incdir+../config/$1 +incdir+../config/shared ../src/cvw.sv ../testbench/testbench-fp.sv ../src/fpu/*.sv ../src/fpu/*/..."
+QuestaSim> # invalid command name "qujit"
+QuestaSim> 

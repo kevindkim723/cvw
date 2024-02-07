@@ -31,7 +31,7 @@
 localparam XLEN = 32'd64;
 
 // IEEE 754 compliance
-localparam IEEE754 = 1;
+localparam IEEE754 = 0;
 
 // MISA RISC-V configuration per specification
 localparam MISA = (32'h00000104 |  1 << 5 | 1 << 3 | 1 << 18 | 1 << 20 | 1 << 12 | 1 << 0);
@@ -77,7 +77,7 @@ localparam CACHE_SRAMLEN = 32'd128;
 // Integer Divider Configuration
 // IDIV_BITSPERCYCLE must be 1, 2, or 4
 localparam IDIV_BITSPERCYCLE = 32'd4;
-localparam IDIV_ON_FPU = 32'd1;
+localparam IDIV_ON_FPU = 1;
 
 // Legal number of PMP entries are 0, 16, or 64
 localparam PMP_ENTRIES = 32'd16;
@@ -167,7 +167,7 @@ localparam ZMMUL_SUPPORTED = 0;
 
 // FPU division architecture
 localparam RADIX = 32'h4;
-localparam DIVCOPIES = 32'h1;
+localparam DIVCOPIES = 32'h4;
 
 // bit manipulation
 localparam ZBA_SUPPORTED = 1;
@@ -185,4 +185,3 @@ localparam ZCD_SUPPORTED = 0;
 localparam USE_SRAM = 0;
 
 `include "config-shared.vh"
-
