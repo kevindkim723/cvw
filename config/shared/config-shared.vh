@@ -109,7 +109,7 @@ localparam DIVBLEN     = $clog2(DIVb+1);                            // enough bi
 localparam CVTLEN = ((NF<XLEN) ? (XLEN) : (NF));  // max(XLEN, NF)
 localparam LLEN = (($unsigned(FLEN)<$unsigned(XLEN)) ? ($unsigned(XLEN)) : ($unsigned(FLEN)));
 localparam LOGCVTLEN = $unsigned($clog2(CVTLEN+1));
-localparam NORMSHIFTSZ = (((CVTLEN+NF+1)>(DIVb + 1 +NF+1) & (CVTLEN+NF+1)>(3*NF+6)) ? (CVTLEN+NF+1) : ((DIVb + 1 +NF+1) > (3*NF+6) ? (DIVb + 1 +NF+1) : (3*NF+6)));
+localparam NORMSHIFTSZ = (((CVTLEN+NF+1)>(DIVb + 1 +NF+1) & (CVTLEN+NF+1)>(3*NF+6)) ? (CVTLEN+NF+1) : ((DIVb + 1 +NF+1) > (3*NF+6) ? (DIVb + 1 +NF+1) : (3*NF+6))); // max(CVTLEN+NF+1, DIVb + 1 + NF + 1, 3*NF+6)
 localparam LOGNORMSHIFTSZ = ($clog2(NORMSHIFTSZ));
 localparam CORRSHIFTSZ = (NORMSHIFTSZ-2 > (DIVMINb + 1 + NF)) ? NORMSHIFTSZ-2 : (DIVMINb+1+NF);
 
