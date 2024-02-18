@@ -67,7 +67,7 @@ def runsim(configs):
         tc = TestCase(
             name="div",
             variant=config,
-            cmd="vsim > {} -c <<!\ndo testfloat.do " + config + " div \n!",
+            cmd="vsim > {} -c  <<!\ndo testfloat.do " + config + " div \n!",
             grepstr="All Tests completed with          0 errors"
         )
         testcases.append(tc)
@@ -76,15 +76,32 @@ def runsim(configs):
         tc = TestCase(
             name="sqrt",
             variant=config,
-            cmd="vsim > {} -c <<!\ndo testfloat.do " + config + " sqrt \n!",
+            cmd="vsim > {} -c  <<!\ndo testfloat.do " + config + " sqrt \n!",
             grepstr="All Tests completed with          0 errors"
         )
         testcases.append(tc)
-        
+    for config in configs:
+        # cvtint test case
+        tc = TestCase(
+            name="cvtint",
+            variant=config,
+            cmd="vsim > {} -c  <<!\ndo testfloat.do " + config + " cvtint \n!",
+            grepstr="All Tests completed with          0 errors"
+        )
+        testcases.append(tc)
+    for config in configs:
+        # sqrt test case
+        tc = TestCase(
+            name="cvtfp",
+            variant=config,
+            cmd="vsim > {} -c  <<!\ndo testfloat.do " + config + " cvtfp \n!",
+            grepstr="All Tests completed with          0 errors"
+        )
+        testcases.append(tc)    
       
     # Scale the number of concurrent processes to the number of test cases, but
     # max out at a limited number of concurrent processes to not overwhelm the system
-    with Pool(processes=min(len(configs),multiprocessing.cpu_count())) as pool:
+    with Pool(processes=min(len(configs),multiprocessing.cpu_count(),10)) as pool:
         num_fail = 0
         results = {}
         for config in testcases:
