@@ -82,6 +82,10 @@ def runsim(configs):
         testcases.append(tc)
     for config in configs:
         # cvtint test case
+
+        # skip if divider variant config
+        if (not config[0] == "f"):
+            continue
         tc = TestCase(
             name="cvtint",
             variant=config,
@@ -90,7 +94,11 @@ def runsim(configs):
         )
         testcases.append(tc)
     for config in configs:
-        # sqrt test case
+        # cvtfp test case
+
+        # skip if divider variant config
+        if (not config[0] == "f"):
+            continue
         tc = TestCase(
             name="cvtfp",
             variant=config,
