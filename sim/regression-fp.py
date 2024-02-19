@@ -84,7 +84,7 @@ def runsim(configs):
         # cvtint test case
 
         # skip if divider variant config
-        if (not config[0] == "f"):
+        if (not "ieee" in config[0]):
             continue
         tc = TestCase(
             name="cvtint",
@@ -97,7 +97,7 @@ def runsim(configs):
         # cvtfp test case
 
         # skip if divider variant config
-        if (not config[0] == "f"):
+        if (not "ieee" in config[0]):
             continue
         tc = TestCase(
             name="cvtfp",
