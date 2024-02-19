@@ -153,6 +153,8 @@ module testbenchfp;
       // $display("\nThe start of simulation...");      
       // $display("This simulation for TEST is %s", TEST);
       // $display("This simulation for TEST is of the operand size of %s", TEST_SIZE);      
+      $display("DIVMINB: %d, DIVB: %d, NF: %d, RESBITS: %d, LOGR: %d, RK: %d, FPDIVMINb: %d", DIVMINb, DIVb, NF, RESBITS, LOGR, RK, FPDIVMINb);
+
 
       if (P.Q_SUPPORTED & (TEST_SIZE == "QP" | TEST_SIZE == "all")) begin // if Quad percision is supported
 	 if (TEST === "cvtint" | TEST === "all") begin  // if testing integer conversion
@@ -269,7 +271,7 @@ module testbenchfp;
                Fmt = {Fmt, 2'b11};
             end
 	 end
-	 if (TEST === "div" | TEST === "all") begin // if division is being tested
+	 if (TEST === "ldiv" | TEST === "all") begin // if division is being tested
             // add the divide tests/op-ctrls/unit/fmt
             Tests = {Tests, f128div};
             OpCtrl = {OpCtrl, `DIV_OPCTRL};

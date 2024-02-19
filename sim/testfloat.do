@@ -32,7 +32,7 @@ vlog +incdir+../config/deriv/$1 +incdir+../config/$1 +incdir+../config/shared ..
 vsim -voptargs=+acc work.testbenchfp -GTEST=$2 -GTEST_SIZE="all" 
 
 # Set WAV variable to avoid having any output to wave (to limit disk space)
-quietly set WAV 1;
+quietly set WAV 0;
 
 # Determine if nowave argument is provided this removes any output to
 # a wlf or wave window to reduce disk space.
