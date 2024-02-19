@@ -82,7 +82,7 @@ module fma import cvw::*;  #(parameter cvw_t P) (
   // Alignment shifter
   ///////////////////////////////////////////////////////////////////////////////
   
-  fmaalign #(P) align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .Am, .ASticky, .KillProd, .NFPlusThree);
+  fmaalign #(P) align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .InvA, .Am, .ASticky, .KillProd, .NFPlusThree);
                       
   // ///////////////////////////////////////////////////////////////////////////////
   // // Addition/LZA
