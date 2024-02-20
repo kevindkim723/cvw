@@ -33,6 +33,7 @@ os.chdir(regressionDir)
 coverage = '-coverage' in sys.argv
 fp = '-fp' in sys.argv
 nightly = '-nightly' in sys.argv
+softfloat = '-softfloat' in sys.argv
 
 TestCase = namedtuple("TestCase", ['name', 'variant', 'cmd', 'grepstr'])
 # name:     the name of this test configuration (used in printing human-readable
