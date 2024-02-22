@@ -271,7 +271,7 @@ module testbenchfp;
                Fmt = {Fmt, 2'b11};
             end
 	 end
-	 if (TEST === "ldiv" | TEST === "all") begin // if division is being tested
+	 if (TEST === "div" | TEST === "all") begin // if division is being tested
             // add the divide tests/op-ctrls/unit/fmt
             Tests = {Tests, f128div};
             OpCtrl = {OpCtrl, `DIV_OPCTRL};
