@@ -72,8 +72,8 @@ module fdivsqrtiter import cvw::*;  #(parameter cvw_t P) (
 
   // UOTFC Result U and UM registers/initialization mux
   // Initialize U to 1.0 and UM to 0 for square root; U to 0 and UM to -1 otherwise
-  assign initU  = {SqrtE, {(P.DIVb){1'b0}}};
-  assign initUM = {~SqrtE, {(P.DIVb){1'b0}}};
+  assign initU  = {{(P.DIVb+1){1'b0}}};
+  assign initUM = {{1'b1}, {(P.DIVb){1'b0}}};
   mux2   #(P.DIVb+1)  Umux(UNext[P.DIVCOPIES-1],  initU,  IFDivStartE, UMux);
   mux2   #(P.DIVb+1) UMmux(UMNext[P.DIVCOPIES-1], initUM, IFDivStartE, UMMux);
   flopen #(P.DIVb+1)  UReg(clk, FDivBusyE, UMux,  U[0]);
@@ -83,9 +83,9 @@ module fdivsqrtiter import cvw::*;  #(parameter cvw_t P) (
   // Initialize C to -1 for sqrt and -R for division
   logic [1:0] initCUpper;
   if(P.RADIX == 4) begin
-    mux2 #(2) cuppermux4(2'b00, 2'b11, SqrtE, initCUpper);
+    mux2 #(2) cuppermux4(2'b00, 2'b00, SqrtE, initCUpper);
   end else begin
-    mux2 #(2) cuppermux2(2'b10, 2'b11, SqrtE, initCUpper);
+    mux2 #(2) cuppermux2(2'b10, 2'b00, SqrtE, initCUpper);
   end
   
   assign initC = {initCUpper, {P.DIVb{1'b0}}};
@@ -110,7 +110,8 @@ module fdivsqrtiter import cvw::*;  #(parameter cvw_t P) (
       end else begin: stage
         logic j1;
         assign j1 = (i == 0 & ~C[0][P.DIVb-1]);
-        fdivsqrtstage4 #(P) fdivsqrtstage(.D, .DBar, .D2, .DBar2, .SqrtE, .j1,
+        assign j2 = (i == 1 & ~C[0][P.DIVb-1]);
+        fdivsqrtstage4 #(P) fdivsqrtstage(.D, .DBar, .D2, .DBar2, .SqrtE, .j1, .j2, .X,
           .WS(WS[i]), .WC(WC[i]), .WSNext(WSNext[i]), .WCNext(WCNext[i]), 
           .C(C[i]), .U(U[i]), .UM(UM[i]), .CNext(C[i+1]), .UNext(UNext[i]), .UMNext(UMNext[i]), .un(un[i]));
       end

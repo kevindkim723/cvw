@@ -31,7 +31,7 @@ module fdivsqrtuslc4cmp (
   input  logic [2:0] Dmsbs,             // U0.3 fractional bits after implicit leading 1
   input  logic [4:0] Smsbs,             // U1.4 leading bits of square root approximation
   input  logic [7:0] WSmsbs, WCmsbs,    // Q4.4 residual most significant bits
-  input  logic       SqrtE, j1,
+  input  logic       SqrtE, j1,j2,
   output logic [3:0] udigit             // {2, 1, -1, -2} digit is 0 if none are hot
 );
   logic [6:0] Wmsbs;
@@ -69,7 +69,7 @@ module fdivsqrtuslc4cmp (
   // Choose A for current operation
  always_comb
     if (SqrtE) begin 
-      if (j1) A = 3'b101;
+      if (j2) A = 3'b101;
       else if (Smsbs == 5'b10000) A = 3'b111;
       else A = Smsbs[2:0];
     end else A = Dmsbs;
@@ -82,7 +82,8 @@ module fdivsqrtuslc4cmp (
  
   // Compare residual W to selection constants to choose digit
   always_comb 
-    if      ($signed(Wmsbs) >= $signed(mk2))  udigit = 4'b1000; // choose 2
+    if      (j1) udigit=4'b0100;
+    else if ($signed(Wmsbs) >= $signed(mk2))  udigit = 4'b1000; // choose 2
     else if ($signed(Wmsbs) >= $signed(mk1))  udigit = 4'b0100; // choose 1
     else if ($signed(Wmsbs) >= $signed(mk0))  udigit = 4'b0000; // choose 0
     else if ($signed(Wmsbs) >= $signed(mkm1)) udigit = 4'b0010; // choose -1

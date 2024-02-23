@@ -171,13 +171,17 @@ module fdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   // 2          x-2 = 2(x/2 - 1)      x/2 - 2 = 2(x/4 - 1)
   // 4          2(x)-4 = 4(x/2 - 1))  2(x/2)-4 = 4(x/4 - 1)
   // Summary: PreSqrtX = r(x/2or4 - 1)
-
+  
   logic [P.DIVb:0] PreSqrtX;
   assign EvenExp = Xe[0] ^ ell[0]; // effective unbiased exponent after normalization is even
   mux2 #(P.DIVb+1) sqrtxmux(Xnorm, {1'b0, Xnorm[P.DIVb:1]}, EvenExp, PreSqrtX); // X if exponent odd, X/2 if exponent even
   if (P.RADIX == 2) assign SqrtX = {3'b111, PreSqrtX};                          // PreSqrtX - 2 = 2(PreSqrtX/2 - 1)
   else              assign SqrtX = {2'b11, PreSqrtX, 1'b0};                     // 2PreSqrtX - 4 = 4(PreSqrtX/2 - 1) 
-
+  
+  /*
+  assign EvenExp = Xe[0] ^ ell[0]; // effective unbiased exponent after normalization is even
+  mux2 #(P.DIVb+4) sqrtxmux({{4'b0},Xnorm[P.DIVb:1]}, {{5'b0}, Xnorm[P.DIVb:2]});
+  */
 /*  
   // Attempt to optimize radix 4 to use a left shift by 1 or zero initially, followed by no more left shift
   // This saves one bit in DIVb because there is no initial right shift.

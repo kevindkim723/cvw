@@ -30,9 +30,9 @@
 module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   input  logic [P.DIVb+3:0] D, DBar, D2, DBar2, // Q4.DIVb
   input  logic [P.DIVb:0]   U,UM,               // U1.DIVb
-  input  logic [P.DIVb+3:0] WS, WC,             // Q4.DIVb
+  input  logic [P.DIVb+3:0] X, WS, WC,             // Q4.DIVb
   input  logic [P.DIVb+1:0] C,                  // Q2.DIVb
-  input  logic              SqrtE, j1,
+  input  logic              SqrtE, j1, j2,
   output logic [P.DIVb+1:0] CNext,              // Q2.DIVb
   output logic              un,
   output logic [P.DIVb:0]   UNext, UMNext,      // U1.DIVb
@@ -54,7 +54,7 @@ module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   assign Dmsbs  = D[P.DIVb-1:P.DIVb-3];     // U0.3 most significant fractional bits of divisor after leading 1
   assign WCmsbs = WC[P.DIVb+3:P.DIVb-4];    // Q4.4 most significant bits of residual
   assign WSmsbs = WS[P.DIVb+3:P.DIVb-4];    // Q4.4 most significant bits of residual
-  fdivsqrtuslc4cmp uslc4(.Dmsbs, .Smsbs, .WSmsbs, .WCmsbs, .SqrtE, .j1, .udigit);
+  fdivsqrtuslc4cmp uslc4(.Dmsbs, .Smsbs, .WSmsbs, .WCmsbs, .SqrtE, .j1, .j2, .udigit);
   assign un = 1'b0; // unused for radix 4
 
   // F generation logic
@@ -76,14 +76,14 @@ module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   assign AddIn = SqrtE ? F : Dsel;
   assign CarryIn = ~SqrtE & (udigit[3] | udigit[2]); // +1 for 2's complement of -D and -2D 
   csa #(P.DIVb+4) csa(WS, WC, AddIn, CarryIn, WSA, WCA);
-  assign WSNext = WSA << 2;
-  assign WCNext = WCA << 2;
+  assign WSNext = (j1==1) ? X : WSA << 2;
+  assign WCNext = (j1==1) ? {(P.DIVb+4){1'b0}}:WCA << 2;
 
   // Shift thermometer code C
   assign CNext = {2'b11, C[P.DIVb+1:2]};
  
   // On-the-fly converter to accumulate result
-  fdivsqrtuotfc4 #(P) fdivsqrtuotfc4(.udigit, .C(CNext[P.DIVb:0]), .U, .UM, .UNext, .UMNext);
+  fdivsqrtuotfc4 #(P) fdivsqrtuotfc4(.udigit, .C(CNext), .U, .UM, .UNext, .UMNext);
 endmodule
 
 
