@@ -29,11 +29,13 @@
 
 module fmaalign import cvw::*;  #(parameter cvw_t P) (
   input  logic [P.NE-1:0]      Xe, Ye, Ze,          // biased exponents in B(NE.0) format
-  input  logic [P.NF:0]        Zm,                  // significand in U(0.NF) format]
+  input  logic [P.NF:0]        Zm,                  // significand in U(1.NF) format]
   input  logic                 XZero, YZero, ZZero, // is the input zero
+  input  logic                 InvA,                // is effective subtraction
   output logic [3*P.NF+3:0]    Am,                  // addend aligned for addition in U(NF+5.2NF+1)
   output logic                 ASticky,             // Sticky bit calculated from the aliged addend
-  output logic                 KillProd             // should the product be set to zero
+  output logic                 KillProd,            // should the product be set to zero
+  output logic                 NFPlusThree          // Is Pe-Ze NF+3
 );
 
   logic [P.NE+1:0]             ACnt;                // how far to shift the addend to align with the product in Q(NE+2.0) format
@@ -63,7 +65,7 @@ module fmaalign import cvw::*;  #(parameter cvw_t P) (
     // If the product is too small to effect the sum, kill the product
     //  |   53'b0    |  106'b(product)  | 1'b0 |
     //  | addnend    |
-    if (KillProd) begin
+    if (KillProd | (NFPlusThree & InvA)) begin
         ZmShifted = {(P.NF+2)'(0), Zm, (2*P.NF+1)'(0)};
         ASticky   = ~(XZero|YZero);
 
@@ -84,6 +86,7 @@ module fmaalign import cvw::*;  #(parameter cvw_t P) (
         ZmShifted = ZmPreshifted >> ACnt;
         ASticky   = |(ZmShifted[P.NF-1:0]); 
     end
+    NFPlusThree = &ACnt &~XZero & ~YZero;
   end
 
   assign Am = ZmShifted[4*P.NF+3:P.NF];

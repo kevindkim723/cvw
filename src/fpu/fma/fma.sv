@@ -59,6 +59,7 @@ module fma import cvw::*;  #(parameter cvw_t P) (
   logic [2*P.NF+1:0]   PmKilled;   // the product's mantissa possibly killed U(2.2Nf)
   logic                KillProd;   // set the product to zero before addition if the product is too small to matter
   logic [P.NE+1:0]     Pe;         // the product's exponent B(NE+2.0) format; adds 2 bits to allow for size of number and negative sign
+  logic                NFPlusThree;//Ze - Pe = NF + 3
 
   ///////////////////////////////////////////////////////////////////////////////
   // Calculate the product
@@ -81,13 +82,13 @@ module fma import cvw::*;  #(parameter cvw_t P) (
   // Alignment shifter
   ///////////////////////////////////////////////////////////////////////////////
   
-  fmaalign #(P) align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .Am, .ASticky, .KillProd);
+  fmaalign #(P) align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .InvA, .Am, .ASticky, .KillProd, .NFPlusThree);
                       
   // ///////////////////////////////////////////////////////////////////////////////
   // // Addition/LZA
   // ///////////////////////////////////////////////////////////////////////////////
       
-  fmaadd #(P) add(.Am, .Pm, .Ze, .Pe, .Ps, .KillProd, .ASticky, .AmInv, .PmKilled, .InvA, .Sm, .Se, .Ss);
+  fmaadd #(P) add(.Am, .Pm, .Ze, .Pe, .Ps, .KillProd, .ASticky, .AmInv, .PmKilled, .InvA, .Sm, .Se, .Ss, .NFPlusThree);
 
   fmalza #(3*P.NF+4, P.NF) lza(.A(AmInv), .Pm(PmKilled), .Cin(InvA & (~ASticky | KillProd)), .sub(InvA), .SCnt);
   

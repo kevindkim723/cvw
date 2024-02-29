@@ -153,6 +153,7 @@ module testbenchfp;
       // $display("\nThe start of simulation...");      
       // $display("This simulation for TEST is %s", TEST);
       // $display("This simulation for TEST is of the operand size of %s", TEST_SIZE);      
+      $display("DIVMINB: %d, DIVB: %d, BIAS: %d", DIVMINb, DIVb, BIAS);
 
       if (P.Q_SUPPORTED & (TEST_SIZE == "QP" | TEST_SIZE == "all")) begin // if Quad percision is supported
 	 if (TEST === "cvtint" | TEST === "all") begin  // if testing integer conversion
@@ -729,7 +730,7 @@ module testbenchfp;
    end
 
    if (TEST === "cmp" | TEST === "all") begin: fcmp
-      fcmp #(P) fcmp (.Fmt(ModFmt), .OpCtrl(OpCtrlVal), .Xs, .Ys, .Xe, .Ye, 
+      fcmp #(P) fcmp (.Fmt(ModFmt), .Zfa(1'b0), .OpCtrl(OpCtrlVal), .Xs, .Ys, .Xe, .Ye, 
                    .Xm, .Ym, .XZero, .YZero, .CmpIntRes(CmpRes),
                    .XNaN, .YNaN, .XSNaN, .YSNaN, .X, .Y, .CmpNV(CmpFlg[4]), .CmpFpRes(FpCmpRes));
    end
@@ -971,6 +972,15 @@ module testbenchfp;
          $display("TestNum %d OpCtrl %d", TestNum, OpCtrl[TestNum]);	 
          $display("inputs: %h %h %h\nSrcA: %h\n Res: %h %h\n Expected: %h %h", X, Y, Z, SrcA, Res, ResFlg, Ans, AnsFlg);
          $stop;
+         $stop;
+      end else if (((UnitVal === `CVTINTUNIT) | (UnitVal === `CMPUNIT)) & 
+         ~(ResMatch & FlagMatch) & (Ans[0] !== 1'bx)) begin // Check for conversion and comparisons  
+            errors += 1;
+            $display("\nError in %s", Tests[TestNum]);
+            $display("TestNum %d OpCtrl %d", TestNum, OpCtrl[TestNum]);	 	 
+            $display("inputs: %h %h %h\nSrcA: %h\n Res: %h %h\n Ans: %h %h", X, Y, Z, SrcA, Res, ResFlg, Ans, AnsFlg);
+	         $display("time: $t", $realtime);
+            $stop;
       end
 
       if (TestVectors[VectorNum][0] === 1'bx & Tests[TestNum] !== "") begin // if reached the eof

@@ -1,0 +1,164 @@
+buildroot no coverage
+[92mrv32gc_arch32c: Success[0m
+[92mrv64gc_wally64a: Success[0m
+[92mway_8_4096_512_rv64gc_arch64i: Success[0m
+[92mdiv_4_4_rv32gc_arch32m: Success[0m
+[92mdiv_2_2i_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv32gc_arch32m: Success[0m
+[92mrv64gc_wally64periph: Success[0m
+[92mram_1_0_rv64gc_ahb64: Success[0m
+[92mdiv_2_4i_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_2_4_rv64gc_arch64m: Success[0m
+[92mrv32i_arch32i: Success[0m
+[92mrv64gc_arch64d_divsqrt: Success[0m
+[92mnoicache_rv64gc_ahb64: Success[0m
+[92mdiv_4_4_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_4_1_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32gc_arch32a: Success[0m
+[92mrv64gc_arch64c: Success[0m
+[92mram_2_1_rv64gc_ahb64: Success[0m
+[92mdiv_2_4i_rv32gc_arch32m: Success[0m
+[92mdiv_4_4i_rv32gc_arch32m: Success[0m
+[92mdiv_2_4_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv32gc_arch32zba: Success[0m
+[92mrv64gc_arch64zifencei: Success[0m
+[92mway_2_4096_512_rv32gc_arch32i: Success[0m
+[92mdiv_2_1_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_2i_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_4i_rv64gc_arch64m: Success[0m
+[92mrv64i_arch64i: Success[0m
+[92mrv64gc_arch64i: Success[0m
+[92mdiv_2_2_rv32gc_arch32m: Success[0m
+[92mdiv_4_1_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_2_4i_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32e_arch32e: Success[0m
+[92mrv32imc_arch32i: Success[0m
+[92mrv64gc_arch64zbb: Success[0m
+[92mram_1_1_rv64gc_ahb64: Success[0m
+[92mdiv_4_1i_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_2_4i_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv32gc_arch32zifencei: Success[0m
+[92mrv64gc_arch64zbs: Success[0m
+[92mway_1_4096_512_rv64gc_arch64i: Success[0m
+[92mdiv_2_4_rv32gc_arch32m: Success[0m
+[92mdiv_4_4i_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_4_1i_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32gc_arch32i: Success[0m
+[92mway_4_4096_256_rv32gc_arch32i: Success[0m
+[92mdiv_2_2_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_4_2i_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_1_rv64gc_arch64m: Success[0m
+[92mrv32gc_arch32zbs: Success[0m
+[92mrv64gc_arch64a: Success[0m
+[92mway_4_4096_256_rv64gc_arch64i: Success[0m
+[92mdiv_4_2_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_1_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv32gc_wally32a: Success[0m
+[92mrv64gc_arch64zbc: Success[0m
+[92mway_8_4096_512_rv32gc_arch32i: Success[0m
+[92mdiv_2_2_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_4i_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_1i_rv64gc_arch64m: Success[0m
+[91mrv32gc_arch32zfaf: Failures detected in output[0m
+  Check logs/rv32gc_arch32zfaf.log
+[91mrv64gc_arch64zfad: Failures detected in output[0m
+  Check logs/rv64gc_arch64zfad.log
+[92mtlb2_rv64gc_wally64priv: Success[0m
+[92mdiv_2_1i_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_4_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_4_1i_rv64gc_arch64d_divsqrt: Success[0m
+[91mrv32gc_arch32zfh_divsqrt: Failures detected in output[0m
+  Check logs/rv32gc_arch32zfh_divsqrt.log
+[91mrv64gc_arch64zfh_divsqrt: Failures detected in output[0m
+  Check logs/rv64gc_arch64zfh_divsqrt.log
+[92mway_1_4096_512_rv32gc_arch32i: Success[0m
+[92mnodcache_rv64gc_ahb64: Success[0m
+[92mdiv_2_2i_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_1_rv64gc_arch64f_divsqrt: Success[0m
+[92mdiv_4_2_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32imc_arch32c: Success[0m
+[92mrv64gc_arch64f_divsqrt: Success[0m
+[92mram_2_0_rv64gc_ahb64: Success[0m
+[92mdiv_4_1_rv32gc_arch32m: Success[0m
+[92mdiv_2_1_rv64gc_arch64d_divsqrt: Success[0m
+[92mdiv_4_2i_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32gc_arch32zbb: Success[0m
+[92mrv64gc_arch64zicond: Success[0m
+[92mway_4_4096_1024_rv64gc_arch64i: Success[0m
+[92mdiv_4_2_rv32gc_arch32m: Success[0m
+[92mdiv_2_1i_rv64gc_arch64f_divsqrt: Success[0m
+[92mdiv_4_2_rv64gc_arch64d_divsqrt: Success[0m
+[91mrv32gc_arch32zfh_fma: Failures detected in output[0m
+  Check logs/rv32gc_arch32zfh_fma.log
+[91mrv64gc_arch64zfaf: Failures detected in output[0m
+  Check logs/rv64gc_arch64zfaf.log
+[92mtlb2_rv32gc_wally32priv: Success[0m
+[92mnoicache_rv32gc_ahb32: Success[0m
+[92mdiv_4_1i_rv32gc_arch32m: Success[0m
+[92mdiv_2_1_rv64gc_arch64m: Success[0m
+[92mdiv_4_2_rv64gc_arch64m: Success[0m
+[92mrv32gc_wally32periph: Success[0m
+[91mrv64gc_arch64zfh: Failures detected in output[0m
+  Check logs/rv64gc_arch64zfh.log
+[92mtlb16_rv32gc_wally32priv: Success[0m
+[92mnocache_rv64gc_ahb64: Success[0m
+[92mdiv_2_4_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_1i_rv64gc_arch64d_divsqrt: Success[0m
+[92mdiv_4_2i_rv64gc_arch64m: Success[0m
+[92mrv32gc_arch32f_divsqrt: Success[0m
+[92mway_2_4096_512_rv64gc_arch64i: Success[0m
+[92mdiv_2_4i_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_2_rv64gc_arch64f_divsqrt: Success[0m
+[92mdiv_4_2i_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv32gc_arch32f_fma: Success[0m
+[92mdiv_4_4_rv64gc_arch64m: Success[0m
+[92mrv32gc_arch32d_divsqrt: Success[0m
+[92mram_0_0_rv64gc_ahb64: Success[0m
+[92mdiv_2_4_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_2_2i_rv64gc_arch64f_divsqrt: Success[0m
+[92mdiv_4_4_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32gc_arch32priv: Success[0m
+[92mrv64gc_arch64priv: Success[0m
+[92mway_4_2048_512_rv32gc_arch32i: Success[0m
+[92mdiv_2_1i_rv32gc_arch32m: Success[0m
+[92mdiv_2_2i_rv32gc_arch32m: Success[0m
+[92mdiv_4_2i_rv32gc_arch32m: Success[0m
+[92mdiv_2_1i_rv64gc_arch64m: Success[0m
+[92mdiv_4_4_rv64gc_arch64d_divsqrt: Success[0m
+[91mrv32gc_arch32zfh: Failures detected in output[0m
+  Check logs/rv32gc_arch32zfh.log
+[91mrv64gc_arch64zfh_fma: Failures detected in output[0m
+  Check logs/rv64gc_arch64zfh_fma.log
+[92mtlb16_rv64gc_wally64priv: Success[0m
+[92mdiv_2_1i_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_4_2_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_4_rv64gc_arch64f_divsqrt: Success[0m
+[92mdiv_4_4i_rv64gc_arch64f_divsqrt: Success[0m
+[92mrv32e_arch32e: Success[0m
+[92mrv64gc_arch64zba: Success[0m
+[92mway_4_2048_512_rv64gc_arch64i: Success[0m
+[92mdiv_4_1i_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_2_rv64gc_arch64m: Success[0m
+[92mdiv_4_4i_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv32gc_wally32priv: Success[0m
+[92mrv64gc_wally64priv: Success[0m
+[92mdiv_2_1_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_4_1_rv32gc_arch32f_divsqrt: Success[0m
+[92mdiv_2_2i_rv64gc_arch64m: Success[0m
+[92mdiv_4_4i_rv64gc_arch64m: Success[0m
+[92mrv32imc_wally32periph: Success[0m
+[92mrv64gc_arch64f_fma: Success[0m
+[92mrv32gc_arch32d: Success[0m
+[92mrv64gc_arch64d: Success[0m
+[92mrv32gc_arch32zicond: Success[0m
+[92mrv64gc_arch64m: Success[0m
+[92mdiv_2_1_rv32gc_arch32m: Success[0m
+[92mdiv_2_2i_rv32gc_arch32d_divsqrt: Success[0m
+[92mdiv_2_2_rv64gc_arch64d_divsqrt: Success[0m
+[92mrv64gc_buildroot: Success[0m
+[92mrv32gc_arch32f: Success[0m
+[92mrv32gc_arch32d_fma: Success[0m
+[92mrv64gc_arch64f: Success[0m
+[92mrv32imc_arch32m: Success[0m
+[92mrv64gc_arch64d_fma: Success[0m
+[91mRegression failed with 9 failed configurations[0m

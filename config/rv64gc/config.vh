@@ -185,4 +185,3 @@ localparam ZCD_SUPPORTED = 0;
 localparam USE_SRAM = 0;
 
 `include "config-shared.vh"
-
