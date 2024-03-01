@@ -111,7 +111,7 @@ module fdivsqrtiter import cvw::*;  #(parameter cvw_t P) (
         logic j1;
         logic jlast;
         assign j1 = (i == 0 & ~C[0][P.DIVb-1]);
-        assign jlast = (i == 1 & C[1][0]);
+        assign jlast = (i == 1 & C[1][0] & SqrtE);
         fdivsqrtstage4 #(P) fdivsqrtstage(.D, .DBar, .D2, .DBar2, .SqrtE, .j1, .jlast,
           .WS(WS[i]), .WC(WC[i]), .WSNext(WSNext[i]), .WCNext(WCNext[i]), 
           .C(C[i]), .U(U[i]), .UM(UM[i]), .CNext(C[i+1]), .UNext(UNext[i]), .UMNext(UMNext[i]), .un(un[i]));
