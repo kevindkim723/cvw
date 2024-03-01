@@ -79,7 +79,7 @@ module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   assign CarryIn = ~SqrtE & (udigit[3] | udigit[2]); // +1 for 2's complement of -D and -2D 
   csa #(P.DIVb+4) csa(WS, WC, AddIn, CarryIn, WSA, WCA);
   assign WSNext = (jlast &CNext[0]) ? WS : WSA << 2;
-  assign WCNext = (jlast &CNext[0]) ? WS : WCA << 2;
+  assign WCNext = (jlast &CNext[0]) ? WC : WCA << 2;
 
   // Shift thermometer code C
   //assign CNext = (jlast) ? {C[P.DIVb+1:2],2'b00} : {2'b11, C[P.DIVb+1:2]}; // K.K Does it make any difference to replace this signal by muxing in the two lsbs?
