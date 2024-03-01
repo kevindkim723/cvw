@@ -32,7 +32,7 @@ module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   input  logic [P.DIVb:0]   U,UM,               // U1.DIVb
   input  logic [P.DIVb+3:0] WS, WC,             // Q4.DIVb
   input  logic [P.DIVb+1:0] C,                  // Q2.DIVb
-  input  logic              SqrtE, j1,
+  input  logic              SqrtE, j1, jlast,
   output logic [P.DIVb+1:0] CNext,              // Q2.DIVb
   output logic              un,
   output logic [P.DIVb:0]   UNext, UMNext,      // U1.DIVb
@@ -48,6 +48,8 @@ module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   logic [7:0]               WCmsbs, WSmsbs;     // U4.4
   logic                     CarryIn;
   logic [P.DIVb+3:0]        WSA, WCA;           // Q4.DIVb
+  logic [P.DIVb+1:0]        CNextP;
+  logic [P.DIVb:0]   UNextOTFC, UMNextOTFC;     // U1.DIVb
 
   // Digit Selection logic
   assign Smsbs  = U[P.DIVb:P.DIVb-4];       // U1.4 most significant bits of square root
@@ -76,14 +78,21 @@ module fdivsqrtstage4 import cvw::*;  #(parameter cvw_t P) (
   assign AddIn = SqrtE ? F : Dsel;
   assign CarryIn = ~SqrtE & (udigit[3] | udigit[2]); // +1 for 2's complement of -D and -2D 
   csa #(P.DIVb+4) csa(WS, WC, AddIn, CarryIn, WSA, WCA);
-  assign WSNext = WSA << 2;
-  assign WCNext = WCA << 2;
+  assign WSNext = (jlast &CNext[0]) ? WS : WSA << 2;
+  assign WCNext = (jlast &CNext[0]) ? WS : WCA << 2;
 
   // Shift thermometer code C
-  assign CNext = {2'b11, C[P.DIVb+1:2]};
- 
+  //assign CNext = (jlast) ? {C[P.DIVb+1:2],2'b00} : {2'b11, C[P.DIVb+1:2]}; // K.K Does it make any difference to replace this signal by muxing in the two lsbs?
+  assign CNext = {2'b11, C[P.DIVb+1:2]}; // K.K Does it make any difference to replace this signal by muxing in the two lsbs?
+  //assign CNextP = {CNext[P.DIVb+1:2], {2{(jlast^C[3])}}}; // K.K Does it make any difference to replace this signal by muxing in the two lsbs?
+  //assign CNextP = {CNext[P.DIVb+1:2], {2{jlast}}}; // K.K Does it make any difference to replace this signal by muxing in the two lsbs?
+  //assign CNextP = CNext;
+  
   // On-the-fly converter to accumulate result
-  fdivsqrtuotfc4 #(P) fdivsqrtuotfc4(.udigit, .C(CNext[P.DIVb:0]), .U, .UM, .UNext, .UMNext);
+  //fdivsqrtuotfc4 #(P) fdivsqrtuotfc4(.udigit, .C(CNextP[P.DIVb:0]), .U, .UM, .UNext, .UMNext);
+  fdivsqrtuotfc4 #(P) fdivsqrtuotfc4(.udigit, .C(CNext[P.DIVb:0]), .U, .UM, .UNext(UNextOTFC), .UMNext(UMNextOTFC));
+  mux2 #(P.DIVb+1) UMux(UNextOTFC, U, jlast&CNext[0],UNext);
+  mux2 #(P.DIVb+1) UMMux(UMNextOTFC, UM, jlast&CNext[0],UMNext);
 endmodule
 
 
