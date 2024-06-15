@@ -37,7 +37,7 @@ module kevindivremsqrtfdivsqrtpostproc import cvw::*;  #(parameter cvw_t P) (
   input  logic                 SqrtE,
   input  logic                 Firstun, SqrtM, SpecialCaseM, 
   input  logic [P.XLEN-1:0]    AM,                // U/Q(XLEN.0)
-  input  logic                 RemOpM, ALTBM, BZeroM, AsM, BsM, W64M, SIGNOVERFLOWM, ZeroDiffM, IntDivM,
+  input  logic                 RemOpM, ALTBM, BZeroM, AsM, BsM, W64M, SIGNOVERFLOWM, ZeroDiffM, IntDivM, DOneM,
   input  logic [P.DIVBLEN-1:0] IntNormShiftM,
   //input  logic [P.DIVBLEN-1:0] IntNormShiftM,     
   input  logic [P.XLEN-1:0]    PreIntResultM,
@@ -62,7 +62,8 @@ module kevindivremsqrtfdivsqrtpostproc import cvw::*;  #(parameter cvw_t P) (
   //////////////////////////
 
   // check for early termination on an exact result. 
-  divremsqrtearlyterm #(P) earlyterm(.FirstC, .FirstUM, .D, .SqrtE, .WC, .WS,.Firstun, .WZeroE);
+  divremsqrtearlytermopt #(P) earlyterm(.FirstC, .FirstUM, .D, .SqrtE, .WC, .WS,.Firstun, .WZeroE);
+  //divremsqrtearlyterm #(P) earlyterm(.FirstC, .FirstUM, .D, .SqrtE, .WC, .WS,.Firstun, .WZeroE);
   //divremsqrtearlytermkevin #(P) earlyterm(.FirstC, .FirstUM, .D, .SqrtE, .Sum,.Firstun, .WZeroE);
   /*
   aplusbeq0 #(P.DIVb+4) wspluswceq0(WS, WC, weq0E);
@@ -96,7 +97,7 @@ module kevindivremsqrtfdivsqrtpostproc import cvw::*;  #(parameter cvw_t P) (
   //////////////////////////
 
   //  If the result is not exact, the sticky should be set
-  assign DivStickyM = ~WZeroM & ~SpecialCaseM; 
+  assign DivStickyM = ~(WZeroM | DOneM) & ~SpecialCaseM; 
 
   // Determine if sticky bit is negative *** Full sum only needed for Integer
   assign Sum = WC + WS;

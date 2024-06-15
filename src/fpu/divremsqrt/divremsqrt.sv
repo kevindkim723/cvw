@@ -70,6 +70,7 @@
   logic [P.DURLEN:0]         CyclesE;                      // FSM cycles
   logic                       SpecialCaseM;                 // Divide by zero, square root of negative, etc.
   logic                       DivStartE;                    // Enable signal for flops during stall
+  logic                       DOneM;
                                                             
   // Integer div/rem signals                                
   logic                       BZeroM;                       // Denominator is zero
@@ -85,7 +86,7 @@
     // Int-specific 
     .ForwardedSrcAE, .ForwardedSrcBE, .IntDivE, .W64E, .ISpecialCaseE,
     .BZeroM, .AM, 
-    .IntDivM, .W64M, .ALTBM, .AsM, .BsM, .IntNormShiftM, .SIGNOVERFLOWM, .ZeroDiffM);
+    .IntDivM, .W64M, .ALTBM, .AsM, .BsM, .IntNormShiftM, .SIGNOVERFLOWM, .ZeroDiffM, .DOneM);
 
   fdivsqrtfsm #(P) fdivsqrtfsm(                                  // FSM
     .clk, .reset, .XInfE, .YInfE, .XZeroE, .YZeroE, .XNaNE, .YNaNE, 
@@ -104,7 +105,7 @@
     .UmM, .WZeroE, .DivStickyM, 
     // Int-specific 
     .ALTBM, .AsM, .BsM, .BZeroM, .W64M, .RemOpM(Funct3M[1]), .AM, 
-    .FIntDivResultM,  .PreResultM, .PreIntResultM, .SIGNOVERFLOWM, .ZeroDiffM, .IntDivM, .IntNormShiftM);
+    .FIntDivResultM,  .PreResultM, .PreIntResultM, .SIGNOVERFLOWM, .ZeroDiffM, .IntDivM, .IntNormShiftM, .DOneM);
   
   
   /*divremsqrtfdivsqrtpostproc #(P) fdivsqrtpostproc(                        // Postprocessor

@@ -36,6 +36,8 @@ module kevindivremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   input  logic                 SqrtE,
   input  logic                 XZeroE,
   input  logic [2:0]           Funct3E,
+  output logic                 DZeroM,
+  output logic                 DOneM,
   output logic [P.NE+1:0]      UeM,         // biased exponent of result
   output logic [P.DIVb+3:0]    X, D,        // Q4.DIVb
   // Int-specific
@@ -63,6 +65,7 @@ module kevindivremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   logic                        AsE, BsE;                            // Signs of integer inputs
   logic [P.XLEN-1:0]           AE;                                  // input A after W64 adjustment
   logic                        ALTBE;
+  logic                        DOneE;
   logic                        EvenExp;
 
   logic [$clog2(P.RK):0] RightShiftX;
@@ -117,6 +120,7 @@ module kevindivremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   // Normalization shift: shift leading one into most significant bit
   assign Xnorm = (IFX << ell);
   assign Dnorm = (IFD << mE); 
+  assign DOneE = (Dnorm == {1'b1,{P.DIVb{1'b0}}});
 
   //////////////////////////////////////////////////////
   // Integer Right Shift to digit boundary
@@ -224,6 +228,7 @@ module kevindivremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
 
   // Divisior register
   flopen #(P.DIVb+4) dreg(clk, IFDivStartE, {3'b000, Dnorm}, D);
+  flopen #(1) donereg(clk, IFDivStartE, DOneE, DOneM);
  
   // Floating-point exponent
   fdivsqrtexpcalc #(P) expcalc(.Fmt(FmtE), .Xe, .Ye, .Sqrt(SqrtE), .ell, .m(mE), .Ue(UeE));

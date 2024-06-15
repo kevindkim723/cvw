@@ -50,7 +50,8 @@ module fdivsqrtstage2 import cvw::*;  #(parameter cvw_t P) (
 
   // Quotient Selection logic
   // Given partial remainder, select digit of +1, 0, or -1 (up, uz, un)
-  fdivsqrtuslc2 uslc2(.WS(WS[P.DIVb+3:P.DIVb]), .WC(WC[P.DIVb+3:P.DIVb]), .up, .uz, .un);
+  //fdivsqrtuslc2 uslc2(.WS(WS[P.DIVb+3:P.DIVb]), .WC(WC[P.DIVb+3:P.DIVb]), .up, .uz, .un);
+  fdivsqrtuslc2kevin uslc2(.WS(WS[P.DIVb+3:P.DIVb]), .WC(WC[P.DIVb+3:P.DIVb]), .ws5(WS[P.DIVb-1]), .wc5(WC[P.DIVb-1]), .up, .uz, .un);
 
   // Sqrt F generation.  Extend C, U, UM to Q4.k
   fdivsqrtfgen2 #(P) fgen2(.up, .uz, .C({2'b11, CNext}), .U({3'b000, U}), .UM({3'b000, UM}), .F);
