@@ -47,7 +47,7 @@ module divremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   output logic [P.DIVBLEN-1:0] IntNormShiftM,
   output logic                 ALTBM, IntDivM, W64M, SIGNOVERFLOWM, ZeroDiffM,
   output logic                 AsM, BsM, BZeroM,
-  output logic [P.XLEN-1:0]    AM
+  output logic [P.XLEN-1:0]    AM, BM
 );
 
   logic [P.DIVb:0]             Xnorm, Dnorm;
@@ -61,7 +61,7 @@ module divremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   logic                        AZeroE, BZeroE;                      // A or B is Zero for integer division
   logic                        SignedDivE;                          // signed division
   logic                        AsE, BsE;                            // Signs of integer inputs
-  logic [P.XLEN-1:0]           AE;                                  // input A after W64 adjustment
+  logic [P.XLEN-1:0]           AE, BE;                                  // input A after W64 adjustment
   logic                        ALTBE;
   logic                        EvenExp;
 
@@ -74,7 +74,7 @@ module divremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
   //////////////////////////////////////////////////////
 
   if (P.IDIV_ON_FPU) begin:intpreproc // Int Supported
-    logic [P.XLEN-1:0] BE, PosA, PosB;
+    logic [P.XLEN-1:0] PosA, PosB;
 
     // Extract inputs, signs, zero, depending on W64 mode if applicable
     assign SignedDivE = ~Funct3E[0];
@@ -136,7 +136,8 @@ module divremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
     mux2 #(P.DIVBLEN) pmux(ZeroDiff, '0, ALTBE, p);          
 
     /* verilator lint_off WIDTH */
-    assign IntResultBitsE = P.LOGR + p;  // Total number of result bits (r integer bits plus p fractional bits)
+    //assign IntResultBitsE = P.LOGR + p;  // Total number of result bits (r integer bits plus p fractional bits)
+    assign IntResultBitsE = p;  // Total number of result bits (r integer bits plus p fractional bits)
    
     /* verilator lint_on WIDTH */
 
@@ -242,6 +243,7 @@ module divremsqrtfdivsqrtpreproc import cvw::*;  #(parameter cvw_t P) (
     flopen #(1)        bsignreg(clk, IFDivStartE, BsE,      BsM);
     flopen #(P.DIVBLEN)   nsreg(clk, IFDivStartE, IntNormShiftE, IntNormShiftM); 
     flopen #(P.XLEN)    srcareg(clk, IFDivStartE, AE,       AM);
+    flopen #(P.XLEN)    srcbreg(clk, IFDivStartE, BE,       BM);
     if (P.XLEN==64) 
       flopen #(1)        w64reg(clk, IFDivStartE, W64E,     W64M);
   end

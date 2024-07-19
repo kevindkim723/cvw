@@ -75,7 +75,7 @@
   logic                       BZeroM;                       // Denominator is zero
   logic [P.DIVBLEN:0]          nM, mM;                       // Shift amounts
   logic                       NegQuotM, ALTBM, AsM, BsM, W64M, SIGNOVERFLOWM, ZeroDiffM;   // Special handling for postprocessor
-  logic [P.XLEN-1:0]           AM;                           // Original Numerator for postprocessor
+  logic [P.XLEN-1:0]           AM,BM;                           // Original Numerator for postprocessor
   logic                       ISpecialCaseE;                // Integer div/remainder special cases
 
 
@@ -84,7 +84,7 @@
     .FmtE, .SqrtE, .XZeroE, .Funct3E, .UeM, .X, .D, .CyclesE,
     // Int-specific 
     .ForwardedSrcAE, .ForwardedSrcBE, .IntDivE, .W64E, .ISpecialCaseE,
-    .BZeroM, .AM, 
+    .BZeroM, .AM, .BM, 
     .IntDivM, .W64M, .ALTBM, .AsM, .BsM, .IntNormShiftM, .SIGNOVERFLOWM, .ZeroDiffM);
 
   fdivsqrtfsm #(P) fdivsqrtfsm(                                  // FSM
@@ -103,7 +103,7 @@
     .SqrtE, .Firstun, .SqrtM, .SpecialCaseM, 
     .UmM, .WZeroE, .DivStickyM, 
     // Int-specific 
-    .ALTBM, .AsM, .BsM, .BZeroM, .W64M, .RemOpM(Funct3M[1]), .AM, 
+    .ALTBM, .AsM, .BsM, .BZeroM, .W64M, .RemOpM(Funct3M[1]), .AM, .BM, 
     .FIntDivResultM,  .PreResultM, .PreIntResultM, .SIGNOVERFLOWM, .ZeroDiffM, .IntDivM, .IntNormShiftM);
   
   

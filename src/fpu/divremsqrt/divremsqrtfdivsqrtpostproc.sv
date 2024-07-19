@@ -36,7 +36,7 @@ module divremsqrtfdivsqrtpostproc import cvw::*;  #(parameter cvw_t P) (
   input  logic [P.DIVb+1:0]    FirstC,            // Q2.DIVb
   input  logic                 SqrtE,
   input  logic                 Firstun, SqrtM, SpecialCaseM, 
-  input  logic [P.XLEN-1:0]    AM,                // U/Q(XLEN.0)
+  input  logic [P.XLEN-1:0]    AM, BM,               // U/Q(XLEN.0)
   input  logic                 RemOpM, ALTBM, BZeroM, AsM, BsM, W64M, SIGNOVERFLOWM, ZeroDiffM, IntDivM,
   input  logic [P.DIVBLEN-1:0] IntNormShiftM,
   input  logic [P.XLEN-1:0]    PreIntResultM,
@@ -104,7 +104,7 @@ module divremsqrtfdivsqrtpostproc import cvw::*;  #(parameter cvw_t P) (
     intrightshift #(P) intnormshifter(PreResultM, IntNormShiftM, PreResultShiftedM);
     mux2 #(P.INTDIVb+4)    preintresultmux(PreResultShiftedM, -PreResultShiftedM,AsM ^ (BsM&~RemOpM), PreIntResultM);
 
-    divremsqrtintspecialcase #(P) intspecialcase(BZeroM,RemOpM, ALTBM,AM,PreIntResultM,IntDivResultM);
+    divremsqrtintspecialcase #(P) intspecialcase(BZeroM,RemOpM, ALTBM,AM,BM,PreIntResultM,IntDivResultM);
     // sign extend result for W64
     if (P.XLEN==64) begin
       mux2 #(64) resmux(IntDivResultM[P.XLEN-1:0], 

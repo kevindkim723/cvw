@@ -110,7 +110,7 @@ localparam DURLEN      = $clog2(FPDUR);                             // enough bi
 localparam DIVBLEN     = $clog2(DIVb+1);                            // enough bits to count number of fractional bits + 1 integer bit
 
 
-localparam INTRESBITS     = XLEN + LOGR; // number of bits in a result: r integer + b fractional
+localparam INTRESBITS     = XLEN; // number of bits in a result
 
 // division constants
 localparam INTFPDUR       = (INTRESBITS-1)/RK + 1 ;                       // ceiling((r+b)/rk)
